@@ -3,6 +3,7 @@
 This repository demonstrates how Amazon Q Developer enhances workflows for different roles in software development teams.
 
 ## Demo Workflows for Developer
+![iScreen Shoter - 20250630093434179](https://github.com/user-attachments/assets/35189212-9854-49dd-b00a-2cbecc097fee)
 
 **Location**: `dev-flow/`
 
@@ -12,6 +13,7 @@ This repository demonstrates how Amazon Q Developer enhances workflows for diffe
 - **MCP Integration**: Jira and Figma
 
 ## Demo Workflows for BA (Business Analyst)
+![iScreen Shoter - 20250630093357200](https://github.com/user-attachments/assets/422c936d-450f-4d4e-806f-43adfc0eb666)
 
 **Location**: `ba-flow/`
 
@@ -21,6 +23,7 @@ This repository demonstrates how Amazon Q Developer enhances workflows for diffe
 - **MCP Integration**: Jira and Confluence
 
 ## Demo Workflows for QA
+![iScreen Shoter - Obsidian - 250630093517](https://github.com/user-attachments/assets/20d8fc65-b33e-49c1-aa59-b482953d7711)
 
 **Location**: `qa-flow/`
 
