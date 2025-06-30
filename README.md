@@ -15,6 +15,10 @@ This repository demonstrates how Amazon Q Developer enhances workflows for diffe
 ## Demo Workflows for BA (Business Analyst)
 ![iScreen Shoter - 20250630093357200](https://github.com/user-attachments/assets/422c936d-450f-4d4e-806f-43adfc0eb666)
 
+**DEMO VIDEO:**
+- Part 1: https://vimeo.com/1097403159/36a26df52b
+- Part 2: https://vimeo.com/1097403159/36a26df52b
+
 **Location**: `ba-flow/`
 
 - **Demo Project Overview**: BA Workflow starting from client requirements at Confluence
@@ -24,6 +28,8 @@ This repository demonstrates how Amazon Q Developer enhances workflows for diffe
 
 ## Demo Workflows for QA
 ![iScreen Shoter - Obsidian - 250630093517](https://github.com/user-attachments/assets/20d8fc65-b33e-49c1-aa59-b482953d7711)
+
+**DEMO VIDEO:** https://vimeo.com/1097399907/9ded53fdee
 
 **Location**: `qa-flow/`
 
