@@ -5,6 +5,13 @@ This repository demonstrates how Amazon Q Developer enhances workflows for diffe
 ## Demo Workflows for Developer
 ![iScreen Shoter - 20250630093434179](https://github.com/user-attachments/assets/35189212-9854-49dd-b00a-2cbecc097fee)
 
+**DEMO VIDEO:**
+
+NOTE: Sorry for the background noise. I will create another demo videos. As the video demo is quite long, it takes some time to create. In the meanwhile, please view the demo videos below. So sorry for the inconvenience.
+
+- Part 1: https://vimeo.com/1097413675/4e067d05e9
+- Part 2: https://vimeo.com/1097420042/2be1d3d1ca
+
 **Location**: `dev-flow/`
 
 - **Demo Project Overview**: Complete e-commerce interior design landing page
@@ -16,6 +23,9 @@ This repository demonstrates how Amazon Q Developer enhances workflows for diffe
 ![iScreen Shoter - 20250630093357200](https://github.com/user-attachments/assets/422c936d-450f-4d4e-806f-43adfc0eb666)
 
 **DEMO VIDEO:**
+
+NOTE: Sorry for the background noise. I will create another demo videos. As the video demo is quite long, it takes some time to create. In the meanwhile, please view the demo videos below. So sorry for the inconvenience.
+
 - Part 1: https://vimeo.com/1097403159/36a26df52b
 - Part 2: https://vimeo.com/1097407041/0260c1b599
 
