@@ -7,7 +7,7 @@ const HeroBanner: React.FC = () => {
     <section className="relative h-[716px] w-full overflow-hidden">
       <div className="absolute inset-0">
         <img 
-          src="/src/assets/images/hero-background.jpg"
+          src="/hero-background.jpg"
           alt="Interior Design Background"
           className="w-full h-full object-cover"
         />

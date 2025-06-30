@@ -21,6 +21,10 @@ export interface GalleryImage {
   alt: string;
 }
 
+// Shop page specific types
+export type ViewMode = 'grid' | 'list';
+export type SortOption = 'default' | 'price-low' | 'price-high' | 'name-az' | 'name-za' | 'newest';
+
 // Component prop interfaces
 export interface ButtonProps {
   variant: 'primary' | 'secondary';
@@ -32,5 +36,33 @@ export interface ButtonProps {
 
 export interface CardProps {
   product: Product;
+  className?: string;
+  viewMode?: ViewMode;
+}
+
+export interface FilterControlsProps {
+  viewMode: ViewMode;
+  onViewModeChange: (mode: ViewMode) => void;
+  sortBy: SortOption;
+  onSortChange: (sort: SortOption) => void;
+  itemsPerPage: number;
+  onItemsPerPageChange: (count: number) => void;
+  totalResults: number;
+  currentPage: number;
+  resultsPerPage: number;
+}
+
+export interface ProductGridProps {
+  viewMode: ViewMode;
+  products: Product[];
+  sortBy: SortOption;
+  itemsPerPage: number;
+  currentPage: number;
+}
+
+export interface HeroSectionProps {
+  title?: string;
+  subtitle?: string;
+  backgroundImage?: string;
   className?: string;
 }

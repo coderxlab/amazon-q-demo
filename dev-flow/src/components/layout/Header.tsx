@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const Header: React.FC = () => {
   return (
@@ -6,7 +7,7 @@ const Header: React.FC = () => {
       {/* Logo - positioned on the left */}
       <div className="flex items-center gap-[5px]">
         <div className="w-[50px] h-[32px]">
-          <img src="/src/assets/images/icons/logo-only.png" alt="Furniro Logo" className="w-full h-full object-contain" />
+          <img src="/icons/logo-only.png" alt="Furniro Logo" className="w-full h-full object-contain" />
         </div>
         <span className="font-montserrat font-bold text-[34px] text-black leading-[41.45px]">Furniro</span>
       </div>
@@ -14,8 +15,8 @@ const Header: React.FC = () => {
       {/* Navigation - centered */}
       <nav className="absolute left-1/2 transform -translate-x-1/2">
         <div className="flex items-center">
-          <a href="#" className="font-poppins font-medium text-base text-black hover:text-[#B88E2F] transition-colors">Home</a>
-          <a href="#" className="font-poppins font-medium text-base text-black hover:text-[#B88E2F] transition-colors ml-[75px]">Shop</a>
+          <Link to="/" className="font-poppins font-medium text-base text-black hover:text-[#B88E2F] transition-colors">Home</Link>
+          <Link to="/shop" className="font-poppins font-medium text-base text-black hover:text-[#B88E2F] transition-colors ml-[75px]">Shop</Link>
           <a href="#" className="font-poppins font-medium text-base text-black hover:text-[#B88E2F] transition-colors ml-[75px]">About</a>
           <a href="#" className="font-poppins font-medium text-base text-black hover:text-[#B88E2F] transition-colors ml-[75px]">Contact</a>
         </div>
@@ -25,22 +26,22 @@ const Header: React.FC = () => {
       <div className="flex items-center ml-auto">
         {/* Account Icon */}
         <button className="w-7 h-7 flex items-center justify-center">
-          <img src="/src/assets/images/icons/account-icon.svg" alt="Account" className="w-full h-full" />
+          <img src="/icons/account-icon.svg" alt="Account" className="w-full h-full" />
         </button>
         
         {/* Search Icon */}
         <button className="w-7 h-7 flex items-center justify-center ml-[45px]">
-          <img src="/src/assets/images/icons/search-icon.svg" alt="Search" className="w-full h-full" />
+          <img src="/icons/search-icon.svg" alt="Search" className="w-full h-full" />
         </button>
         
         {/* Heart Icon */}
         <button className="w-7 h-7 flex items-center justify-center ml-[45px]">
-          <img src="/src/assets/images/icons/heart-icon.svg" alt="Wishlist" className="w-full h-full" />
+          <img src="/icons/heart-icon.svg" alt="Wishlist" className="w-full h-full" />
         </button>
         
         {/* Shopping Cart Icon */}
         <button className="w-7 h-7 flex items-center justify-center ml-[45px]">
-          <img src="/src/assets/images/icons/cart-icon.svg" alt="Cart" className="w-full h-full" />
+          <img src="/icons/cart-icon.svg" alt="Cart" className="w-full h-full" />
         </button>
       </div>
     </header>

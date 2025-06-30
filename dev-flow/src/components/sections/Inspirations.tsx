@@ -20,7 +20,7 @@ const Inspirations: React.FC = () => {
         <div className="flex gap-6 ml-auto pr-0">
           <div className="relative w-[404px] h-[582px]">
             <img 
-              src="/src/assets/images/gallery-1.jpg"
+              src="/gallery-1.jpg"
               alt="Beautiful room inspiration"
               className="w-full h-full object-cover"
               loading="lazy"
@@ -45,7 +45,7 @@ const Inspirations: React.FC = () => {
           <div className="space-y-6">
             <div className="w-[372px] h-[486px]">
               <img 
-                src="/src/assets/images/gallery-2.jpg"
+                src="/gallery-2.jpg"
                 alt="Beautiful room inspiration"
                 className="w-full h-full object-cover"
                 loading="lazy"

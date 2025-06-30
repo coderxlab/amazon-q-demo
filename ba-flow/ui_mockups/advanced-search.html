@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="USDA Calorie Counter - Advanced Search">
+    <title>USDA Calorie Counter - Advanced Search</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; background: #FAFAFA; color: #212121; }
+        
+        .header { position: fixed; top: 0; width: 100%; height: 64px; background: #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; padding: 0 24px; z-index: 100; }
+        .logo { font-size: 20px; font-weight: 500; color: #1976D2; display: flex; align-items: center; gap: 8px; }
+        .logo::before { content: '🌿'; font-size: 24px; }
+        
+        .main { margin-top: 64px; padding: 48px 16px; min-height: calc(100vh - 112px); }
+        .container { max-width: 800px; margin: 0 auto; background: #FFFFFF; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 32px; }
+        
+        .title { font-size: 32px; font-weight: 500; text-align: center; margin-bottom: 24px; }
+        
+        .search-field { position: relative; margin-bottom: 16px; }
+        .search-input { width: 100%; height: 56px; border: 2px solid #E0E0E0; border-radius: 4px; padding: 16px; font-size: 16px; transition: border-color 0.15s ease; }
+        .search-input:focus { outline: none; border-color: #1976D2; }
+        .search-input::placeholder { color: #757575; }
+        
+        .advanced-toggle { background: transparent; border: none; color: #1976D2; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px; margin-top: 16px; transition: color 0.2s ease; }
+        .advanced-toggle:hover { color: #1565C0; }
+        .toggle-icon { transition: transform 0.2s ease; }
+        .toggle-icon.expanded { transform: rotate(180deg); }
+        
+        .advanced-panel { background: #FAFAFA; padding: 24px; border-radius: 4px; margin-top: 16px; display: none; animation: slideDown 0.3s ease-out; }
+        .advanced-panel.show { display: block; }
+        
+        .advanced-label { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+        .advanced-example { font-size: 12px; color: #757575; background: #FFFFFF; padding: 12px; border-radius: 4px; border: 1px solid #E0E0E0; margin-bottom: 16px; }
+        
+        .pattern-badge { background: #42A5F5; color: white; font-size: 12px; font-weight: 500; padding: 4px 8px; border-radius: 12px; display: inline-block; margin-bottom: 16px; }
+        
+        .button-container { display: flex; gap: 16px; margin-top: 24px; }
+        .btn { height: 48px; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary { background: #1976D2; color: white; padding: 0 32px; }
+        .btn-primary:hover { background: #1565C0; }
+        .btn-secondary { background: transparent; border: 2px solid #E0E0E0; color: #757575; padding: 0 24px; }
+        .btn-secondary:hover { background: #F5F5F5; }
+        
+        .results-placeholder { height: 200px; background: #FAFAFA; border: 1px dashed #E0E0E0; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #757575; font-size: 16px; margin-top: 32px; }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .button-container { flex-direction: column; }
+            .btn { width: 100%; }
+            .advanced-panel { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">USDA Calorie Counter</div>
+    </header>
+    
+    <main class="main">
+        <div class="container">
+            <h1 class="title">Advanced Food Search</h1>
+            
+            <div class="search-field">
+                <input type="text" class="search-input" placeholder="Enter food name with wildcards (e.g., chick*)" id="searchInput">
+            </div>
+            
+            <button class="advanced-toggle" onclick="toggleAdvanced()">
+                <span class="toggle-icon" id="toggleIcon">▼</span>
+                Advanced Search Options
+            </button>
+            
+            <div class="advanced-panel" id="advancedPanel">
+                <div class="advanced-label">Use wildcards for flexible searching</div>
+                <div class="advanced-example">
+                    Use * for partial matches (e.g., 'chick*' finds chicken, chickpeas)
+                </div>
+                
+                <div id="patternBadge" class="pattern-badge" style="display: none;">
+                    Pattern: <span id="patternText"></span>
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <button class="btn btn-primary" onclick="performSearch()">
+                    🔍 ADVANCED SEARCH
+                </button>
+                <button class="btn btn-secondary" onclick="clearSearch()">
+                    CLEAR
+                </button>
+            </div>
+            
+            <div class="results-placeholder" id="resultsArea">
+                Advanced search results will appear here
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        let advancedExpanded = false;
+        
+        function toggleAdvanced() {
+            const panel = document.getElementById('advancedPanel');
+            const icon = document.getElementById('toggleIcon');
+            
+            advancedExpanded = !advancedExpanded;
+            
+            if (advancedExpanded) {
+                panel.classList.add('show');
+                icon.classList.add('expanded');
+                icon.textContent = '▲';
+            } else {
+                panel.classList.remove('show');
+                icon.classList.remove('expanded');
+                icon.textContent = '▼';
+            }
+        }
+        
+        function performSearch() {
+            const input = document.getElementById('searchInput');
+            const query = input.value.trim();
+            
+            if (!query) {
+                window.location.href = 'error-state.html?error=Please enter a food name to search';
+                return;
+            }
+            
+            // Check if wildcards are used
+            if (query.includes('*')) {
+                const patternBadge = document.getElementById('patternBadge');
+                const patternText = document.getElementById('patternText');
+                patternText.textContent = query;
+                patternBadge.style.display = 'inline-block';
+            }
+            
+            window.location.href = `search-results.html?q=${encodeURIComponent(query)}&advanced=true`;
+        }
+        
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('patternBadge').style.display = 'none';
+            document.getElementById('searchInput').focus();
+        }
+        
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') performSearch();
+        });
+        
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const query = e.target.value;
+            const patternBadge = document.getElementById('patternBadge');
+            const patternText = document.getElementById('patternText');
+            
+            if (query.includes('*')) {
+                patternText.textContent = query;
+                patternBadge.style.display = 'inline-block';
+            } else {
+                patternBadge.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
