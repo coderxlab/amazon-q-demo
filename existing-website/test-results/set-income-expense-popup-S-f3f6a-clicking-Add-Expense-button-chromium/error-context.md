@@ -1,0 +1,50 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - img "Company Logo"
+  - heading "AI Personal Finance Coach" [level=1]
+  - button:
+    - img
+  - button "Set Budget":
+    - img
+    - text: Set Budget
+  - button "Add Expense":
+    - img
+    - text: Add Expense
+  - button "Logout":
+    - img
+    - text: Logout
+- heading "Good evening • Sunday, huyen1@yopmail.com" [level=2]
+- main:
+  - heading "Monthly Budget" [level=3]
+  - paragraph: $0.00
+  - heading "Total Expenses (This Month)" [level=3]
+  - paragraph: $1,100.00
+  - heading "Remaining Budget" [level=3]
+  - paragraph: "-$1,100.00"
+  - heading "Expenses & Invoices" [level=2]
+  - button "All"
+  - button "Today"
+  - button "Week"
+  - button "Month"
+  - tablist:
+    - tab "Invoice List" [selected]
+    - tab "Expense Chart"
+    - tab "Suggestions"
+  - tabpanel "Invoice List":
+    - heading "June 2025" [level=3]
+    - text: Category Date Amount
+    - img
+    - text: Transportation
+    - time: Jun 26, 2025
+    - text: $100.00
+    - img
+    - text: Housing
+    - time: Jun 27, 2025
+    - text: $1,000.00
+- button:
+  - img
+- region "Notifications (F8)":
+  - list
+```
