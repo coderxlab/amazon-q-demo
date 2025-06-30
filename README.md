@@ -16,8 +16,8 @@ This repository demonstrates how Amazon Q Developer enhances workflows for diffe
 ![iScreen Shoter - 20250630093357200](https://github.com/user-attachments/assets/422c936d-450f-4d4e-806f-43adfc0eb666)
 
 **DEMO VIDEO:**
-- Part 1: https://vimeo.com/1097403159/36a26df52b
-- Part 2: https://vimeo.com/1097403159/36a26df52b
+- Part 1: [https://vimeo.com/1097403159/36a26df52b](https://vimeo.com/1097403159/36a26df52b)
+- Part 2: [https://vimeo.com/1097403159/36a26df52b](https://vimeo.com/1097407041/0260c1b599)
 
 **Location**: `ba-flow/`
 
