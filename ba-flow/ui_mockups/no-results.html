@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="USDA Calorie Counter - No Results Found">
+    <title>USDA Calorie Counter - No Results</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; background: #FAFAFA; color: #212121; }
+        
+        .header { position: fixed; top: 0; width: 100%; height: 64px; background: #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; padding: 0 24px; z-index: 100; }
+        .logo { font-size: 20px; font-weight: 500; color: #1976D2; display: flex; align-items: center; gap: 8px; }
+        .logo::before { content: '🌿'; font-size: 24px; }
+        
+        .main { margin-top: 64px; padding: 48px 16px; min-height: calc(100vh - 112px); }
+        .container { max-width: 800px; margin: 0 auto; background: #FFFFFF; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 32px; }
+        
+        .search-field { position: relative; margin-bottom: 16px; }
+        .search-input { width: 100%; height: 56px; border: 2px solid #E0E0E0; border-radius: 4px; padding: 16px; font-size: 16px; transition: border-color 0.15s ease; }
+        .search-input:focus { outline: none; border-color: #1976D2; }
+        
+        .button-container { display: flex; gap: 16px; margin-bottom: 32px; }
+        .btn { height: 48px; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary { background: #1976D2; color: white; padding: 0 32px; }
+        .btn-primary:hover { background: #1565C0; }
+        .btn-secondary { background: transparent; border: 2px solid #E0E0E0; color: #757575; padding: 0 24px; }
+        .btn-secondary:hover { background: #F5F5F5; }
+        
+        .empty-state { background: #FFFFFF; border-radius: 8px; padding: 48px 32px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .empty-icon { font-size: 64px; margin-bottom: 24px; color: #757575; }
+        .empty-title { font-size: 20px; font-weight: 500; margin-bottom: 16px; }
+        .empty-subtitle { font-size: 16px; font-weight: 500; margin-bottom: 12px; }
+        
+        .suggestions { text-align: left; max-width: 400px; margin: 0 auto 24px; }
+        .suggestions ul { list-style: none; }
+        .suggestions li { font-size: 14px; color: #757575; line-height: 1.6; margin-bottom: 8px; position: relative; padding-left: 20px; }
+        .suggestions li::before { content: '•'; color: #1976D2; font-weight: bold; position: absolute; left: 0; }
+        
+        .action-button { background: #1976D2; color: white; height: 40px; padding: 0 24px; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color 0.2s ease; }
+        .action-button:hover { background: #1565C0; }
+        
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .empty-state { padding: 32px 16px; }
+            .empty-icon { font-size: 48px; }
+            .button-container { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">USDA Calorie Counter</div>
+    </header>
+    
+    <main class="main">
+        <div class="container">
+            <div class="search-field">
+                <input type="text" class="search-input" id="searchInput" value="">
+            </div>
+            
+            <div class="button-container">
+                <button class="btn btn-primary" onclick="performSearch()">
+                    🔍 SEARCH
+                </button>
+                <button class="btn btn-secondary" onclick="clearSearch()">
+                    CLEAR
+                </button>
+            </div>
+            
+            <div class="empty-state">
+                <div class="empty-icon">🔍❌</div>
+                <h2 class="empty-title" id="emptyTitle">No foods found matching 'xyz123'</h2>
+                
+                <h3 class="empty-subtitle">Try these suggestions:</h3>
+                <div class="suggestions">
+                    <ul>
+                        <li>Use shorter, simpler terms</li>
+                        <li>Check your spelling</li>
+                        <li>Try common food names</li>
+                        <li>Use generic terms (e.g., 'apple' instead of 'Granny Smith apple')</li>
+                    </ul>
+                </div>
+                
+                <button class="action-button" onclick="startNewSearch()">
+                    START NEW SEARCH
+                </button>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('q') || 'xyz123';
+        document.getElementById('searchInput').value = query;
+        document.getElementById('emptyTitle').textContent = `No foods found matching '${query}'`;
+        
+        function performSearch() {
+            const input = document.getElementById('searchInput');
+            const newQuery = input.value.trim();
+            if (!newQuery) {
+                window.location.href = 'error-state.html?error=Please enter a food name to search';
+                return;
+            }
+            window.location.href = `search-results.html?q=${encodeURIComponent(newQuery)}`;
+        }
+        
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchInput').focus();
+        }
+        
+        function startNewSearch() {
+            window.location.href = 'main-search.html';
+        }
+        
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') performSearch();
+        });
+    </script>
+</body>
+</html>

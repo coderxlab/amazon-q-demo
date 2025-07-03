@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="USDA Calorie Counter - Paginated Results">
+    <title>USDA Calorie Counter - Paginated Results</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; background: #FAFAFA; color: #212121; }
+        
+        .header { position: fixed; top: 0; width: 100%; height: 64px; background: #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; padding: 0 24px; z-index: 100; }
+        .logo { font-size: 20px; font-weight: 500; color: #1976D2; display: flex; align-items: center; gap: 8px; }
+        .logo::before { content: '🌿'; font-size: 24px; }
+        
+        .main { margin-top: 64px; padding: 48px 16px; min-height: calc(100vh - 112px); }
+        .container { max-width: 800px; margin: 0 auto; background: #FFFFFF; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 32px; }
+        
+        .search-field { position: relative; margin-bottom: 16px; }
+        .search-input { width: 100%; height: 56px; border: 2px solid #E0E0E0; border-radius: 4px; padding: 16px; font-size: 16px; transition: border-color 0.15s ease; }
+        .search-input:focus { outline: none; border-color: #1976D2; }
+        
+        .button-container { display: flex; gap: 16px; margin-bottom: 16px; }
+        .btn { height: 48px; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary { background: #1976D2; color: white; padding: 0 32px; }
+        .btn-primary:hover { background: #1565C0; }
+        .btn-secondary { background: transparent; border: 2px solid #E0E0E0; color: #757575; padding: 0 24px; }
+        .btn-secondary:hover { background: #F5F5F5; }
+        
+        .results-counter { font-size: 14px; color: #757575; margin-bottom: 16px; }
+        
+        .results-panel { background: #FFFFFF; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
+        .result-item { height: 72px; padding: 16px; border-bottom: 1px solid #E0E0E0; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.15s ease; cursor: pointer; }
+        .result-item:hover { background: #F5F5F5; }
+        .result-item:last-child { border-bottom: none; }
+        
+        .food-info h3 { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+        .food-info p { font-size: 14px; color: #757575; }
+        
+        .calorie-info { font-size: 18px; font-weight: 500; color: #388E3C; }
+        
+        .pagination-controls { background: #FFFFFF; padding: 16px; border-top: 1px solid #E0E0E0; display: flex; justify-content: space-between; align-items: center; }
+        .results-info { font-size: 14px; color: #757575; }
+        
+        .load-more { background: #1976D2; color: white; height: 40px; padding: 0 24px; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
+        .load-more:hover { background: #1565C0; }
+        .load-more:disabled { background: #E0E0E0; color: #757575; cursor: not-allowed; }
+        .load-more.loading { position: relative; }
+        .load-more.loading::after { content: ''; position: absolute; width: 16px; height: 16px; border: 2px solid transparent; border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite; }
+        
+        .pagination-numbers { display: flex; gap: 8px; align-items: center; }
+        .page-number { width: 40px; height: 40px; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
+        .page-number.current { background: #1976D2; color: white; }
+        .page-number:not(.current) { background: transparent; color: #1976D2; }
+        .page-number:not(.current):hover { background: #E3F2FD; }
+        .page-number:disabled { color: #E0E0E0; cursor: not-allowed; }
+        
+        .nav-arrow { background: transparent; border: none; color: #1976D2; font-size: 14px; font-weight: 500; cursor: pointer; padding: 8px 12px; border-radius: 4px; transition: background-color 0.2s ease; }
+        .nav-arrow:hover:not(:disabled) { background: #E3F2FD; }
+        .nav-arrow:disabled { color: #E0E0E0; cursor: not-allowed; }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .button-container { flex-direction: column; }
+            .btn { width: 100%; }
+            .result-item { flex-direction: column; align-items: flex-start; height: auto; padding: 12px 16px; }
+            .calorie-info { align-self: flex-end; margin-top: 8px; }
+            .pagination-controls { flex-direction: column; gap: 16px; }
+            .pagination-numbers { order: -1; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">USDA Calorie Counter</div>
+    </header>
+    
+    <main class="main">
+        <div class="container">
+            <div class="search-field">
+                <input type="text" class="search-input" id="searchInput" value="chicken">
+            </div>
+            
+            <div class="button-container">
+                <button class="btn btn-primary" onclick="performSearch()">
+                    🔍 SEARCH
+                </button>
+                <button class="btn btn-secondary" onclick="clearSearch()">
+                    CLEAR
+                </button>
+            </div>
+            
+            <div class="results-counter">
+                Showing 1-25 of 150 results for 'chicken'
+            </div>
+            
+            <div class="results-panel">
+                <div class="result-item">
+                    <div class="food-info">
+                        <h3>Chicken, broilers or fryers, breast, meat only, cooked, roasted</h3>
+                        <p>1 cup, chopped or diced (140g)</p>
+                    </div>
+                    <div class="calorie-info">231 cal</div>
+                </div>
+                <div class="result-item">
+                    <div class="food-info">
+                        <h3>Chicken, broilers or fryers, thigh, meat only, cooked, roasted</h3>
+                        <p>1 cup, chopped or diced (140g)</p>
+                    </div>
+                    <div class="calorie-info">287 cal</div>
+                </div>
+                <div class="result-item">
+                    <div class="food-info">
+                        <h3>Chicken, broilers or fryers, wing, meat and skin, cooked, roasted</h3>
+                        <p>1 wing (32g)</p>
+                    </div>
+                    <div class="calorie-info">99 cal</div>
+                </div>
+                <div class="result-item">
+                    <div class="food-info">
+                        <h3>Chicken, broilers or fryers, drumstick, meat only, cooked, roasted</h3>
+                        <p>1 drumstick (44g)</p>
+                    </div>
+                    <div class="calorie-info">76 cal</div>
+                </div>
+                <div class="result-item">
+                    <div class="food-info">
+                        <h3>Chicken, canned, meat only, with broth</h3>
+                        <p>1 cup (244g)</p>
+                    </div>
+                    <div class="calorie-info">234 cal</div>
+                </div>
+            </div>
+            
+            <div class="pagination-controls">
+                <div class="results-info">Showing 1-25 of 150 results</div>
+                
+                <div class="pagination-numbers">
+                    <button class="nav-arrow" onclick="previousPage()" disabled>← Previous</button>
+                    <button class="page-number current" onclick="goToPage(1)">1</button>
+                    <button class="page-number" onclick="goToPage(2)">2</button>
+                    <button class="page-number" onclick="goToPage(3)">3</button>
+                    <button class="page-number" onclick="goToPage(4)">4</button>
+                    <button class="page-number" onclick="goToPage(5)">5</button>
+                    <span>...</span>
+                    <button class="page-number" onclick="goToPage(6)">6</button>
+                    <button class="nav-arrow" onclick="nextPage()">Next →</button>
+                </div>
+                
+                <button class="load-more" onclick="loadMore()" id="loadMoreBtn">
+                    LOAD MORE (25)
+                </button>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        let currentPage = 1;
+        let totalPages = 6;
+        let loadingMore = false;
+        
+        function performSearch() {
+            const input = document.getElementById('searchInput');
+            const query = input.value.trim();
+            if (!query) {
+                window.location.href = 'error-state.html?error=Please enter a food name to search';
+                return;
+            }
+            window.location.href = `paginated-results.html?q=${encodeURIComponent(query)}`;
+        }
+        
+        function clearSearch() {
+            window.location.href = 'main-search.html';
+        }
+        
+        function loadMore() {
+            if (loadingMore) return;
+            
+            const btn = document.getElementById('loadMoreBtn');
+            loadingMore = true;
+            btn.classList.add('loading');
+            btn.textContent = 'LOADING...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                loadingMore = false;
+                btn.classList.remove('loading');
+                btn.textContent = 'LOAD MORE (25)';
+                btn.disabled = false;
+                
+                // Update results counter
+                document.querySelector('.results-counter').textContent = 'Showing 1-50 of 150 results for \'chicken\'';
+                document.querySelector('.results-info').textContent = 'Showing 1-50 of 150 results';
+            }, 1500);
+        }
+        
+        function goToPage(page) {
+            if (page === currentPage) return;
+            
+            currentPage = page;
+            updatePagination();
+            
+            // Simulate page change
+            document.querySelector('.results-counter').textContent = `Showing ${(page-1)*25 + 1}-${Math.min(page*25, 150)} of 150 results for 'chicken'`;
+            document.querySelector('.results-info').textContent = `Showing ${(page-1)*25 + 1}-${Math.min(page*25, 150)} of 150 results`;
+        }
+        
+        function previousPage() {
+            if (currentPage > 1) {
+                goToPage(currentPage - 1);
+            }
+        }
+        
+        function nextPage() {
+            if (currentPage < totalPages) {
+                goToPage(currentPage + 1);
+            }
+        }
+        
+        function updatePagination() {
+            const pageNumbers = document.querySelectorAll('.page-number');
+            const prevBtn = document.querySelector('.nav-arrow');
+            const nextBtn = document.querySelectorAll('.nav-arrow')[1];
+            
+            pageNumbers.forEach((btn, index) => {
+                btn.classList.toggle('current', index + 1 === currentPage);
+            });
+            
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+        
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') performSearch();
+        });
+    </script>
+</body>
+</html>

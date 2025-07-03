@@ -8,6 +8,7 @@ export default {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(circle, var(--tw-gradient-stops))',
+        'shop-hero': 'url("/shop-hero-background.jpg")',
       },
       spacing: {
         '15': '3.75rem',

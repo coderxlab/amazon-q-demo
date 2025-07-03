@@ -5,17 +5,17 @@ const CategorySection: React.FC = () => {
     {
       id: 'dining',
       name: 'Dining',
-      image: '/src/assets/images/dining-category.jpg'
+      image: '/dining-category.jpg'
     },
     {
       id: 'living',
       name: 'Living',
-      image: '/src/assets/images/living-category.jpg'
+      image: '/living-category.jpg'
     },
     {
       id: 'bedroom',
       name: 'Bedroom',
-      image: '/src/assets/images/bedroom-category.jpg'
+      image: '/bedroom-category.jpg'
     }
   ];
 
